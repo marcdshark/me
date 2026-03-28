@@ -9,7 +9,7 @@ const projects = [
   {
     title: 'Draco Platform',
     description:
-      'A decentralized lottery system built on the Solana blockchain.\nThe purpose of this project was to explore Solana capabilities from local development to production, never to do any presale or make any money out of it.',
+      'A decentralized lottery system built on the Solana blockchain.\n\nThe purpose of this project was to explore Solana capabilities from local development to production, never to do any presale or make any money out of it.',
     links: {
       website: 'https://www.draco-platform.com/',
       github: 'https://github.com/draco-platform/protocol',

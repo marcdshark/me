@@ -18,7 +18,9 @@ const DRIFT_X = 2
 const DRIFT_Y = 0.5
 const INTENSITY_OFFSET = 3
 const SHARK_DENSITY_DESKTOP = 0.00035
+const SHARK_DENSITY_TABLET = 0.0006
 const SHARK_DENSITY_MOBILE = 0.0009
+const FONT_STRING = `${FONT_SIZE}px "JetBrains Mono", "Courier New", monospace`
 
 /** Simple seeded PRNG */
 function mulberry32(seed: number) {
@@ -31,15 +33,7 @@ function mulberry32(seed: number) {
   }
 }
 
-/** Measure char width on a temporary canvas to avoid DPR/transform issues */
-function measureCharWidth(fontSize: number): number {
-  const offscreen = document.createElement('canvas')
-  const offCtx = offscreen.getContext('2d')!
-  offCtx.font = `${fontSize}px "JetBrains Mono", "Courier New", monospace`
-  return offCtx.measureText('@').width || fontSize * 0.6
-}
-
-export default function AsciiCanvasScrolling({ svgSource }: Props) {
+export default function AsciiCanvas({ svgSource }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -58,6 +52,7 @@ export default function AsciiCanvasScrolling({ svgSource }: Props) {
     let charWidth = 0
     let charHeight = FONT_SIZE
     let currentDpr = window.devicePixelRatio || 1
+    let bgColor = '#0a0a0f'
 
     const filledSvg = svgSource
       .replace(/fill="none"/g, '')
@@ -65,6 +60,9 @@ export default function AsciiCanvasScrolling({ svgSource }: Props) {
       .replace(/stroke-width="\d+"/g, '')
 
     async function setup() {
+      // Fix 1: Wait for fonts to load before measuring
+      await document.fonts.ready
+
       const dpr = window.devicePixelRatio || 1
       currentDpr = dpr
 
@@ -78,14 +76,22 @@ export default function AsciiCanvasScrolling({ svgSource }: Props) {
       canvas!.style.height = `${h}px`
       ctx.scale(dpr, dpr)
 
-      // Measure char width on a clean context to avoid DPR issues
-      charWidth = measureCharWidth(FONT_SIZE)
+      // Fix 4: Measure on the actual rendering context (same font, same state)
+      ctx.font = FONT_STRING
+      charWidth = ctx.measureText('@').width || FONT_SIZE * 0.6
       charHeight = FONT_SIZE * 1.2
 
       totalCols = Math.ceil(w / charWidth) + 2
       totalRows = Math.ceil(h / charHeight) + 2
 
-      const tileCols = Math.max(12, Math.floor(totalCols / 12))
+      // Read bg color for canvas fill
+      bgColor = getComputedStyle(document.documentElement)
+        .getPropertyValue('--bg')
+        .trim() || '#0a0a0f'
+
+      // Bigger sharks on smaller screens so the logo shape is recognizable
+      const tileDivisor = w < 768 ? 3 : w < 1200 ? 6 : 9
+      const tileCols = Math.max(12, Math.floor(totalCols / tileDivisor))
       const tileRows = Math.floor(tileCols * (162 / 174))
 
       const grayscale = await rasterizeSvgToGrayscale(filledSvg, tileCols, tileRows)
@@ -97,8 +103,7 @@ export default function AsciiCanvasScrolling({ svgSource }: Props) {
       worldGrid = new Int8Array(worldCols * worldRows).fill(-1)
 
       const rand = mulberry32(42)
-      const isMobile = w < 768
-      const density = isMobile ? SHARK_DENSITY_MOBILE : SHARK_DENSITY_DESKTOP
+      const density = w < 768 ? SHARK_DENSITY_MOBILE : w < 1200 ? SHARK_DENSITY_TABLET : SHARK_DENSITY_DESKTOP
       const sharkCount = Math.floor(worldCols * worldRows * density)
       const margin = 4
 
@@ -146,7 +151,7 @@ export default function AsciiCanvasScrolling({ svgSource }: Props) {
         return
       }
 
-      // Detect DPR change (e.g. window moved to different monitor)
+      // Detect DPR change (window moved to different monitor)
       const dpr = window.devicePixelRatio || 1
       if (Math.abs(dpr - currentDpr) > 0.01) {
         setup()
@@ -162,8 +167,12 @@ export default function AsciiCanvasScrolling({ svgSource }: Props) {
         .trim()
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      ctx.clearRect(0, 0, canvas!.width, canvas!.height)
-      ctx.font = `${FONT_SIZE}px "JetBrains Mono", "Courier New", monospace`
+
+      // Fill with bg color first so edges never show through as bright
+      ctx.fillStyle = bgColor
+      ctx.fillRect(0, 0, window.innerWidth + 10, window.innerHeight + 10)
+
+      ctx.font = FONT_STRING
       ctx.fillStyle = asciiColor || 'rgba(200, 200, 210, 0.5)'
       ctx.textBaseline = 'top'
 
@@ -199,22 +208,35 @@ export default function AsciiCanvasScrolling({ svgSource }: Props) {
       animId = requestAnimationFrame(render)
     }
 
+    let setupId = 0 // increments on each setup call; stale setups bail out
+
     setup().then(() => {
       animId = requestAnimationFrame(render)
     })
 
+    let resizeTimer: number
     function onResize() {
-      setup()
+      // Debounce: wait 150ms after last resize event before re-setup
+      clearTimeout(resizeTimer)
+      resizeTimer = window.setTimeout(() => {
+        const id = ++setupId
+        setup().then(() => {
+          // Only start rendering if this is still the latest setup
+          if (id === setupId) {
+            animId = requestAnimationFrame(render)
+          }
+        })
+      }, 150)
     }
 
     window.addEventListener('resize', onResize)
 
-    // Listen for DPR changes (window moved between screens)
     const dprMedia = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`)
     dprMedia.addEventListener('change', onResize)
 
     return () => {
       cancelAnimationFrame(animId)
+      clearTimeout(resizeTimer)
       window.removeEventListener('resize', onResize)
       dprMedia.removeEventListener('change', onResize)
     }
