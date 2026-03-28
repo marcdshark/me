@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+/* === Tailwind Theme === */
+
+@theme {
+  --font-body: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+/* === CSS Variables (theming) === */
+
+:root {
+  --bg: #0a0a0f;
+  --bg-elevated: rgba(255, 255, 255, 0.06);
+  --text: #e8e8ec;
+  --text-muted: rgba(232, 232, 236, 0.5);
+  --accent: #6ee7b7;
+  --border: rgba(255, 255, 255, 0.08);
+  --ascii-color: rgba(200, 200, 210, 0.5);
+  --glow: rgba(10, 10, 15, 0.9);
+
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f5f5f0;
+    --bg-elevated: rgba(0, 0, 0, 0.05);
+    --text: #1a1a2e;
+    --text-muted: rgba(26, 26, 46, 0.5);
+    --accent: #059669;
+    --border: rgba(0, 0, 0, 0.08);
+    --ascii-color: rgba(26, 26, 46, 0.07);
+    --glow: rgba(245, 245, 240, 0.9);
+
+    color-scheme: light;
+  }
+}
+
+/* === Base === */
+
+html, body {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* === Custom utilities === */
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 60px var(--glow), 0 0 120px var(--glow);
+  }
+  .text-glow-sm {
+    text-shadow: 0 0 40px var(--glow);
+  }
+}
