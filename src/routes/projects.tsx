@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import ProjectCard from '../components/ProjectCard'
+import * as m from '../paraglide/messages.js'
 
 export const Route = createFileRoute('/projects')({
   component: ProjectsComponent,
@@ -7,9 +8,8 @@ export const Route = createFileRoute('/projects')({
 
 const projects = [
   {
-    title: 'Draco Platform',
-    description:
-      'A decentralized lottery system built on the Solana blockchain.\n\nThe purpose of this project was to explore Solana capabilities from local development to production, never to do any presale or make any money out of it.',
+    title: () => m.project_draco_title(),
+    description: () => m.project_draco_description(),
     links: {
       website: 'https://www.draco-platform.com/',
       github: 'https://github.com/draco-platform/protocol',
@@ -26,11 +26,16 @@ function ProjectsComponent() {
   return (
     <section className="pt-12 pb-12">
       <h1 className="font-body font-extrabold text-[clamp(2rem,5vw,3.5rem)] text-[var(--text)] text-glow-sm mb-8 tracking-tight bg-[var(--bg)] inline-block px-1.5 py-0.5 rounded-sm">
-        Projects
+        {m.page_projects_title()}
       </h1>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-6">
-        {projects.map((project) => (
-          <ProjectCard key={project.title} {...project} />
+        {projects.map((project, i) => (
+          <ProjectCard
+            key={i}
+            title={project.title()}
+            description={project.description()}
+            links={project.links}
+          />
         ))}
       </div>
     </section>

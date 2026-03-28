@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import SharkLogo from './SharkLogo'
+import * as m from '../paraglide/messages.js'
 
 export default function Nav() {
   return (
@@ -9,12 +10,12 @@ export default function Nav() {
         activeProps={{ className: '!text-[var(--text)]' }}
         className="font-body text-sm sm:text-base font-medium tracking-wide text-[var(--text-muted)] transition-colors hover:text-[var(--text)] hover:no-underline"
       >
-        Projects
+        {m.nav_projects()}
       </Link>
 
       <Link
         to="/"
-        aria-label="Home"
+        aria-label={m.nav_home_label()}
         className="text-[var(--accent)] transition-opacity hover:opacity-70 hover:no-underline"
       >
         <SharkLogo size={48} />
@@ -25,7 +26,7 @@ export default function Nav() {
         activeProps={{ className: '!text-[var(--text)]' }}
         className="font-body text-sm sm:text-base font-medium tracking-wide text-[var(--text-muted)] transition-colors hover:text-[var(--text)] hover:no-underline"
       >
-        About
+        {m.nav_about()}
       </Link>
     </nav>
   )

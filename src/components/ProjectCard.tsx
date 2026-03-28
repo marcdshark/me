@@ -7,6 +7,7 @@ import {
   YoutubeIcon,
   RedditIcon,
 } from './SocialIcons'
+import * as m from '../paraglide/messages.js'
 
 interface ProjectCardProps {
   title: string
@@ -23,18 +24,18 @@ interface ProjectCardProps {
 }
 
 const SOCIAL_ENTRIES = [
-  { key: 'website', Icon: GlobeIcon, label: 'Website' },
-  { key: 'github', Icon: GithubIcon, label: 'GitHub' },
-  { key: 'x', Icon: XIcon, label: 'X' },
-  { key: 'reddit', Icon: RedditIcon, label: 'Reddit' },
-  { key: 'tiktok', Icon: TikTokIcon, label: 'TikTok' },
-  { key: 'instagram', Icon: InstagramIcon, label: 'Instagram' },
-  { key: 'youtube', Icon: YoutubeIcon, label: 'YouTube' },
+  { key: 'website', Icon: GlobeIcon, label: () => m.social_website() },
+  { key: 'github', Icon: GithubIcon, label: () => m.social_github() },
+  { key: 'x', Icon: XIcon, label: () => m.social_x() },
+  { key: 'reddit', Icon: RedditIcon, label: () => m.social_reddit() },
+  { key: 'tiktok', Icon: TikTokIcon, label: () => m.social_tiktok() },
+  { key: 'instagram', Icon: InstagramIcon, label: () => m.social_instagram() },
+  { key: 'youtube', Icon: YoutubeIcon, label: () => m.social_youtube() },
 ] as const
 
 export default function ProjectCard({ title, description, links }: ProjectCardProps) {
   const activeLinks = links
-    ? SOCIAL_ENTRIES.filter(({ key }) => links[key])
+    ? SOCIAL_ENTRIES.filter(({ key }) => links[key as keyof typeof links])
     : []
 
   return (
@@ -50,10 +51,10 @@ export default function ProjectCard({ title, description, links }: ProjectCardPr
           {activeLinks.map(({ key, Icon, label }) => (
             <a
               key={key}
-              href={links![key]!}
+              href={links![key as keyof typeof links]!}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={label}
+              aria-label={label()}
               className="text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors hover:no-underline"
             >
               <Icon />

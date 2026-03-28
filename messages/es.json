@@ -1,0 +1,19 @@
+{
+  "home_subtitle": "Builder e Ingeniero de Software",
+  "nav_projects": "Proyectos",
+  "nav_about": "Sobre mí",
+  "nav_home_label": "Inicio",
+  "page_projects_title": "Proyectos",
+  "page_about_title": "Sobre mí",
+  "page_about_text": "Ingeniero de software y builder. Más detalles próximamente.",
+  "project_draco_title": "Draco Platform",
+  "project_draco_description": "Un sistema de lotería descentralizado construido sobre la blockchain de Solana.\n\nEl propósito de este proyecto fue explorar las capacidades de Solana desde el desarrollo local hasta producción, sin intención de hacer ninguna preventa ni generar dinero con ello.",
+  "social_website": "Sitio web",
+  "social_github": "GitHub",
+  "social_x": "X",
+  "social_reddit": "Reddit",
+  "social_tiktok": "TikTok",
+  "social_instagram": "Instagram",
+  "social_youtube": "YouTube",
+  "logo_label": "logo de marcdshark"
+}

@@ -1,12 +1,17 @@
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen'
+import { deLocalizeUrl, localizeUrl } from './paraglide/runtime.js'
 import './index.css'
 
 const router = createRouter({
   routeTree,
   defaultPreload: 'intent',
   scrollRestoration: true,
+  rewrite: {
+    input: ({ url }) => deLocalizeUrl(url),
+    output: ({ url }) => localizeUrl(url),
+  },
 })
 
 declare module '@tanstack/react-router' {

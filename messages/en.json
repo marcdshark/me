@@ -1,0 +1,20 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "home_subtitle": "Builder and Software Engineer",
+  "nav_projects": "Projects",
+  "nav_about": "About",
+  "nav_home_label": "Home",
+  "page_projects_title": "Projects",
+  "page_about_title": "About",
+  "page_about_text": "Software engineer and builder. More details coming soon.",
+  "project_draco_title": "Draco Platform",
+  "project_draco_description": "A decentralized lottery system built on the Solana blockchain.\n\nThe purpose of this project was to explore Solana capabilities from local development to production, never to do any presale or make any money out of it.",
+  "social_website": "Website",
+  "social_github": "GitHub",
+  "social_x": "X",
+  "social_reddit": "Reddit",
+  "social_tiktok": "TikTok",
+  "social_instagram": "Instagram",
+  "social_youtube": "YouTube",
+  "logo_label": "marcdshark logo"
+}
