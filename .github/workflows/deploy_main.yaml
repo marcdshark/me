@@ -1,0 +1,15 @@
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "**"
+
+jobs:
+  deploy:
+    name: Deploy to Cloudflare Pages
+    uses: ./.github/workflows/_deploy_cloudflare_pages.yaml
+    with:
+      environment: main
+      project-name: me
+    secrets: inherit
