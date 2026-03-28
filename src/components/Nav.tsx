@@ -3,11 +3,11 @@ import SharkLogo from './SharkLogo'
 
 export default function Nav() {
   return (
-    <nav className="fixed bottom-0 inset-x-0 z-10 flex items-center justify-around bg-[var(--bg-elevated)] backdrop-blur-xl border-t border-[var(--border)] rounded-t-2xl px-6 py-4 pb-[calc(1rem+env(safe-area-inset-bottom,0px))]">
+    <nav className="fixed top-3 left-3 right-3 z-10 flex items-center justify-around bg-[var(--bg-elevated)] backdrop-blur-xl border border-[var(--border)] rounded-2xl px-6 py-3">
       <Link
         to="/projects"
         activeProps={{ className: '!text-[var(--text)]' }}
-        className="font-body text-sm sm:text-base font-medium uppercase tracking-widest text-[var(--text-muted)] transition-colors hover:text-[var(--text)] hover:no-underline"
+        className="font-body text-sm sm:text-base font-medium tracking-wide text-[var(--text-muted)] transition-colors hover:text-[var(--text)] hover:no-underline"
       >
         Projects
       </Link>
@@ -23,9 +23,9 @@ export default function Nav() {
       <Link
         to="/me"
         activeProps={{ className: '!text-[var(--text)]' }}
-        className="font-body text-sm sm:text-base font-medium uppercase tracking-widest text-[var(--text-muted)] transition-colors hover:text-[var(--text)] hover:no-underline"
+        className="font-body text-sm sm:text-base font-medium tracking-wide text-[var(--text-muted)] transition-colors hover:text-[var(--text)] hover:no-underline"
       >
-        Me
+        About
       </Link>
     </nav>
   )
