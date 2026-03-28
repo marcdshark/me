@@ -15,6 +15,12 @@ function MeComponent() {
         <p className="font-body text-[0.9375rem] leading-relaxed text-[var(--text-muted)] whitespace-pre-line">
           {m.page_about_text()}
         </p>
+        <a
+          href="mailto:bite@marcdshark.com"
+          className="inline-block mt-6 font-body text-sm font-medium text-[var(--accent)] border border-[var(--accent)] rounded-full px-5 py-2 hover:bg-[var(--accent)]/10 hover:text-[var(--accent)] transition-colors hover:no-underline"
+        >
+          {m.contact_button()}
+        </a>
       </div>
     </section>
   )
