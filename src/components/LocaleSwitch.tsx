@@ -7,7 +7,7 @@ export default function LocaleSwitch({ className = '' }: { className?: string })
   function switchLocale() {
     const cleanPath = deLocalizeHref(window.location.pathname)
     const newHref = localizeHref(cleanPath, { locale: otherLocale })
-    window.location.href = newHref
+    window.location.assign(newHref)
   }
 
   return (
