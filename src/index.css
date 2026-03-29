@@ -21,20 +21,6 @@
   color-scheme: dark;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg: #f5f5f0;
-    --bg-elevated: rgba(0, 0, 0, 0.05);
-    --text: #1a1a2e;
-    --text-muted: rgba(26, 26, 46, 0.5);
-    --accent: #059669;
-    --border: rgba(0, 0, 0, 0.08);
-    --ascii-color: rgba(26, 26, 46, 0.07);
-    --glow: rgba(245, 245, 240, 0.9);
-
-    color-scheme: light;
-  }
-}
 
 /* === Base === */
 
