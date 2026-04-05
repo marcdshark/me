@@ -8,6 +8,13 @@ export const Route = createFileRoute('/projects')({
 
 const projects = [
   {
+    title: () => m.project_openclaw_memory_cdc_title(),
+    description: () => m.project_openclaw_memory_cdc_description(),
+    links: {
+      github: 'https://github.com/marcdshark/openclaw-memory-cdc',
+    },
+  },
+  {
     title: () => m.project_draco_title(),
     description: () => m.project_draco_description(),
     links: {

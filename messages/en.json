@@ -7,6 +7,8 @@
   "page_projects_title": "Projects",
   "page_about_title": "About",
   "page_about_text": "I'm Marc Quel, from Barcelona. I build software. My dev name is marcdshark (Marc D. Shark) — partly because I've been following One Piece since I was a kid, and partly because my colleagues at the office started calling me that for some reason I still don't fully understand.\n\nCurrently working at Morescope, where we help companies decarbonize their businesses with AI.\n\nI see all the latest AI developments as a huge wave that is going to hit the coast at some point, and when that happens I'd rather be surfing it than getting crashed by it. I follow the latest AI developments day to day and bring them into my workflows. I'm really interested in exploring and developing the new financial primitives that AI is opening up.",
+  "project_openclaw_memory_cdc_title": "OpenClaw Memory CDC",
+  "project_openclaw_memory_cdc_description": "An OpenClaw plugin that turns agent memory into an event stream. When one agent learns something, every other agent that cares finds out automatically.\n\nStill under development.",
   "project_draco_title": "Draco Platform",
   "project_draco_description": "A decentralized lottery system built on the Solana blockchain.\n\nBuilt for pure exploration. No presale, no profit.",
   "social_website": "Website",
