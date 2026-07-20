@@ -8,6 +8,13 @@ export const Route = createFileRoute('/projects')({
 
 const projects = [
   {
+    title: () => m.project_ownsmith_title(),
+    description: () => m.project_ownsmith_description(),
+    links: {
+      website: 'https://ownsmith.com',
+    },
+  },
+  {
     title: () => m.project_openclaw_memory_cdc_title(),
     description: () => m.project_openclaw_memory_cdc_description(),
     links: {
