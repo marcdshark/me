@@ -8,6 +8,13 @@ export const Route = createFileRoute('/projects')({
 
 const projects = [
   {
+    title: () => m.project_drawbook_title(),
+    description: () => m.project_drawbook_description(),
+    links: {
+      website: 'https://getdrawbook.com',
+    },
+  },
+  {
     title: () => m.project_ownsmith_title(),
     description: () => m.project_ownsmith_description(),
     links: {
